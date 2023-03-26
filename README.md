@@ -7,7 +7,8 @@ Created on Thu Mar 26 10:00:26 2023
 Version control
 
 ### Description
-Chjore: Init changes second part
+Chore: Init changes second part
+chore: changes with Python files
 
 ### Files used
 Include the files used
