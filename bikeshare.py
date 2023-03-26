@@ -152,9 +152,10 @@ def station_stats(df):
     print("The most commonly used end station :", most_common_end_station)
 
 
-    # display most frequent combination of start station and end station trip
-    most_common_end_station = df['End Station'].value_counts().idxmax()
-    print("The most commonly used end station :", most_common_end_station)
+    # display the most frequent combination of start station and end station trip
+    df['station_combination'] = df['Start Station']+' -> '+df['End Station']
+    favourite_station_combination = df['station_combination'].mode()[0]
+    print('the most commonly used combination of start station and end station trip:', favourite_station_combination)
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -219,20 +220,27 @@ def user_stats(df):
     print('-'*40)
 
 
-def display_data():
+def display_data(city):
     """Displays statistics on the total and average trip duration."""
+    df = pd.read_csv(CITY_DATA[city])
     view_data = input('\nWould you like to view 5 rows of individual trip data? Enter yes or no\n')
     start_loc = 0
-    while True:
-        print(df.iloc[????:????])
+    Number_of_rows = len(df.index)
+    pd.set_option('display.max_columns', None)
+    while (start_loc<Number_of_rows):
+        print(df.iloc[start_loc:start_loc + 5])
         start_loc += 5
         view_data = input("Do you wish to continue?: ").lower()
+        if view_data != 'yes':
+            break
+            
+        
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        display_data()
+        display_data(city)
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
